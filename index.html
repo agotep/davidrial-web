@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>David Rial Peluquerías — Oviedo & Avilés</title>
+  <meta name="description" content="Peluquería y estética de alta gama en Oviedo y Avilés. Más de 20 años de experiencia. Cortes, mechas, balayage, tratamientos y recogidos." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── RESET & BASE ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --sage:       #7a9e7e;
+      --sage-dark:  #4a6e4e;
+      --sage-light: #c8dbc9;
+      --cream:      #f5f0e8;
+      --warm-white: #faf8f4;
+      --wood:       #8b6343;
+      --wood-light: #c4956a;
+      --charcoal:   #2a2a2a;
+      --mid:        #5a5a5a;
+      --light-text: #8a8a8a;
+      --gold:       #c9a96e;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans:  'Jost', system-ui, sans-serif;
+    }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background: var(--warm-white);
+      color: var(--charcoal);
+      font-family: var(--font-sans);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--cream); }
+    ::-webkit-scrollbar-thumb { background: var(--sage); border-radius: 2px; }
+
+    /* ─── CURSOR DOT ─── */
+    .cursor-dot {
+      width: 8px; height: 8px;
+      background: var(--sage);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease, background 0.2s ease;
+    }
+    .cursor-ring {
+      width: 36px; height: 36px;
+      border: 1px solid var(--sage);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.18s ease, width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
+      opacity: 0.6;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 4rem;
+      transition: background 0.4s ease, padding 0.4s ease, backdrop-filter 0.4s ease;
+    }
+    nav.scrolled {
+      background: rgba(250, 248, 244, 0.92);
+      backdrop-filter: blur(12px);
+      padding: 0.9rem 4rem;
+      box-shadow: 0 1px 20px rgba(0,0,0,0.06);
+    }
+    .nav-logo {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--warm-white);
+      transition: color 0.4s ease;
+    }
+    nav.scrolled .nav-logo { color: var(--charcoal); }
+    .nav-links {
+      display: flex; gap: 2.5rem; list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(250,248,244,0.85);
+      transition: color 0.3s ease;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
+      height: 1px; background: var(--gold);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    nav.scrolled .nav-links a { color: var(--mid); }
+    .nav-cta {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.6rem;
+      border: 1px solid rgba(250,248,244,0.5);
+      color: var(--warm-white);
+      border-radius: 50px;
+      transition: all 0.3s ease;
+    }
+    .nav-cta:hover { background: var(--warm-white); color: var(--charcoal); }
+    nav.scrolled .nav-cta { border-color: var(--sage); color: var(--sage); }
+    nav.scrolled .nav-cta:hover { background: var(--sage); color: var(--warm-white); }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 1.5px;
+      background: var(--warm-white);
+      transition: all 0.3s ease;
+    }
+    nav.scrolled .hamburger span { background: var(--charcoal); }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative; height: 100vh; min-height: 600px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('assets/hero.jpg');
+      background-size: cover; background-position: center 30%;
+      transform: scale(1.05);
+      transition: transform 8s ease;
+    }
+    .hero-bg.loaded { transform: scale(1); }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        160deg,
+        rgba(30,45,30,0.55) 0%,
+        rgba(20,30,20,0.35) 50%,
+        rgba(10,15,10,0.6) 100%
+      );
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center; color: var(--warm-white);
+      max-width: 800px; padding: 0 2rem;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      opacity: 0; transform: translateY(20px);
+      animation: fadeUp 0.8s 0.3s forwards;
+    }
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(3.2rem, 8vw, 6.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+      opacity: 0; transform: translateY(30px);
+      animation: fadeUp 0.9s 0.5s forwards;
+    }
+    .hero-title em { font-style: italic; color: var(--sage-light); }
+    .hero-subtitle {
+      font-size: 1rem; font-weight: 300;
+      letter-spacing: 0.06em;
+      color: rgba(250,248,244,0.8);
+      margin-bottom: 3rem;
+      opacity: 0; transform: translateY(20px);
+      animation: fadeUp 0.8s 0.7s forwards;
+    }
+    .hero-actions {
+      display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap;
+      opacity: 0; transform: translateY(20px);
+      animation: fadeUp 0.8s 0.9s forwards;
+    }
+    .btn-primary {
+      padding: 0.9rem 2.4rem;
+      background: var(--sage);
+      color: var(--warm-white);
+      font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      border: 1px solid var(--sage);
+    }
+    .btn-primary:hover { background: var(--sage-dark); border-color: var(--sage-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(74,110,78,0.35); }
+    .btn-outline {
+      padding: 0.9rem 2.4rem;
+      background: transparent;
+      color: var(--warm-white);
+      font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+      border-radius: 50px;
+      border: 1px solid rgba(250,248,244,0.4);
+      transition: all 0.3s ease;
+    }
+    .btn-outline:hover { background: rgba(250,248,244,0.1); border-color: var(--warm-white); transform: translateY(-2px); }
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      color: rgba(250,248,244,0.5);
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+      animation: fadeIn 1s 1.5s both;
+    }
+    .scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, rgba(250,248,244,0.5), transparent);
+      animation: scrollPulse 2s infinite;
+    }
+
+    /* ─── SECTION BASE ─── */
+    section { padding: 7rem 4rem; }
+    .section-tag {
+      font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--sage); margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 300; line-height: 1.15;
+      color: var(--charcoal);
+    }
+    .section-title em { font-style: italic; color: var(--sage-dark); }
+    .section-line {
+      width: 48px; height: 1px;
+      background: var(--gold);
+      margin: 1.5rem 0;
+    }
+    .section-text {
+      font-size: 1rem; color: var(--mid);
+      max-width: 540px; line-height: 1.8;
+    }
+
+    /* ─── ABOUT ─── */
+    #about {
+      background: var(--cream);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;
+      align-items: center;
+    }
+    .about-image-wrap {
+      position: relative;
+    }
+    .about-image-wrap img {
+      width: 100%; height: 600px;
+      object-fit: cover; border-radius: 4px;
+    }
+    .about-badge {
+      position: absolute; bottom: -2rem; right: -2rem;
+      width: 140px; height: 140px;
+      background: var(--sage);
+      border-radius: 50%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      color: var(--warm-white);
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(74,110,78,0.3);
+    }
+    .about-badge strong {
+      font-family: var(--font-serif);
+      font-size: 2.4rem; font-weight: 300; line-height: 1;
+    }
+    .about-badge span { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; }
+    .about-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .stat-item { border-left: 2px solid var(--sage-light); padding-left: 1rem; }
+    .stat-num {
+      font-family: var(--font-serif);
+      font-size: 2rem; font-weight: 300;
+      color: var(--sage-dark);
+    }
+    .stat-label { font-size: 0.78rem; color: var(--light-text); letter-spacing: 0.06em; }
+
+    /* ─── SERVICES ─── */
+    #services { background: var(--warm-white); }
+    .services-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 4rem;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--sage-light);
+      border-radius: 4px; overflow: hidden;
+    }
+    .service-card {
+      background: var(--warm-white);
+      padding: 0;
+      position: relative; overflow: hidden;
+      cursor: pointer;
+      aspect-ratio: 1;
+    }
+    .service-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .service-card:hover img { transform: scale(1.06); }
+    .service-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(20,35,20,0.75) 0%, transparent 55%);
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+      transition: background 0.4s ease;
+    }
+    .service-card:hover .service-overlay {
+      background: linear-gradient(to top, rgba(20,35,20,0.88) 0%, rgba(20,35,20,0.2) 100%);
+    }
+    .service-num {
+      font-family: var(--font-serif);
+      font-size: 0.85rem; color: var(--gold);
+      letter-spacing: 0.1em; margin-bottom: 0.3rem;
+    }
+    .service-name {
+      font-family: var(--font-serif);
+      font-size: 1.6rem; font-weight: 300;
+      color: var(--warm-white); line-height: 1.1;
+    }
+    .service-desc {
+      font-size: 0.82rem; color: rgba(250,248,244,0.7);
+      margin-top: 0.5rem;
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+    .service-card:hover .service-desc { max-height: 60px; }
+
+    /* ─── EXPERIENCE STRIP ─── */
+    #experience {
+      background: var(--charcoal);
+      padding: 5rem 4rem;
+      display: flex; align-items: center; justify-content: center;
+      gap: 6rem; flex-wrap: wrap;
+    }
+    .exp-item { text-align: center; color: var(--warm-white); }
+    .exp-num {
+      font-family: var(--font-serif);
+      font-size: 3.5rem; font-weight: 300;
+      color: var(--gold); line-height: 1;
+    }
+    .exp-label {
+      font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(250,248,244,0.5); margin-top: 0.5rem;
+    }
+    .exp-divider {
+      width: 1px; height: 60px;
+      background: rgba(250,248,244,0.15);
+    }
+
+    /* ─── GALLERY ─── */
+    #gallery { background: var(--cream); padding: 7rem 0; }
+    .gallery-header { padding: 0 4rem; margin-bottom: 3rem; }
+    .gallery-track {
+      display: flex; gap: 1rem;
+      overflow-x: auto; padding: 0 4rem;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+    .gallery-track::-webkit-scrollbar { display: none; }
+    .gallery-item {
+      flex: 0 0 320px; height: 420px;
+      scroll-snap-align: start;
+      border-radius: 4px; overflow: hidden;
+      position: relative;
+    }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.04); }
+
+    /* ─── TESTIMONIALS ─── */
+    #testimonials {
+      background: var(--warm-white);
+      text-align: center;
+    }
+    .testimonials-header { margin-bottom: 4rem; }
+    .testimonials-header .section-line { margin: 1.5rem auto; }
+    .testimonials-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2rem; max-width: 1100px; margin: 0 auto;
+    }
+    .testimonial-card {
+      background: var(--cream);
+      padding: 2.5rem;
+      border-radius: 4px;
+      text-align: left;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .testimonial-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+    .testimonial-quote {
+      font-family: var(--font-serif);
+      font-size: 3rem; color: var(--sage-light);
+      line-height: 0.5; margin-bottom: 1rem;
+    }
+    .testimonial-text {
+      font-family: var(--font-serif);
+      font-size: 1.1rem; font-style: italic;
+      color: var(--charcoal); line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    .testimonial-author {
+      font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--sage-dark);
+    }
+    .stars { color: var(--gold); font-size: 0.8rem; margin-bottom: 0.8rem; }
+
+    /* ─── LOCATIONS ─── */
+    #locations {
+      background: var(--sage-dark);
+      display: grid; grid-template-columns: 1fr 1fr;
+    }
+    .location-card {
+      padding: 6rem 4rem;
+      color: var(--warm-white);
+      position: relative; overflow: hidden;
+    }
+    .location-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(0,0,0,0.1);
+      transition: background 0.3s ease;
+    }
+    .location-card:hover::before { background: rgba(0,0,0,0.05); }
+    .location-card:first-child { border-right: 1px solid rgba(250,248,244,0.15); }
+    .location-tag {
+      font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.8rem;
+      position: relative; z-index: 1;
+    }
+    .location-name {
+      font-family: var(--font-serif);
+      font-size: 2.4rem; font-weight: 300;
+      margin-bottom: 2rem;
+      position: relative; z-index: 1;
+    }
+    .location-info {
+      display: flex; flex-direction: column; gap: 1rem;
+      position: relative; z-index: 1;
+    }
+    .location-row {
+      display: flex; gap: 1rem; align-items: flex-start;
+    }
+    .location-icon {
+      width: 18px; height: 18px; flex-shrink: 0;
+      opacity: 0.6; margin-top: 2px;
+    }
+    .location-detail { font-size: 0.9rem; color: rgba(250,248,244,0.8); line-height: 1.5; }
+    .location-hours {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(250,248,244,0.15);
+      position: relative; z-index: 1;
+    }
+    .hours-title {
+      font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: rgba(250,248,244,0.5); margin-bottom: 0.8rem;
+    }
+    .hours-row {
+      display: flex; justify-content: space-between;
+      font-size: 0.85rem; color: rgba(250,248,244,0.75);
+      padding: 0.3rem 0;
+      border-bottom: 1px solid rgba(250,248,244,0.06);
+    }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      background: var(--warm-white);
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 6rem; align-items: center;
+    }
+    .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-label {
+      font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--light-text);
+    }
+    .form-input, .form-select, .form-textarea {
+      padding: 0.9rem 1rem;
+      background: var(--cream);
+      border: 1px solid transparent;
+      border-radius: 4px;
+      font-family: var(--font-sans);
+      font-size: 0.9rem; color: var(--charcoal);
+      transition: border-color 0.3s ease, background 0.3s ease;
+      outline: none;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--sage);
+      background: var(--warm-white);
+    }
+    .form-textarea { resize: vertical; min-height: 120px; }
+    .form-submit {
+      padding: 1rem 2.5rem;
+      background: var(--charcoal);
+      color: var(--warm-white);
+      font-family: var(--font-sans);
+      font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+      border: none; border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      align-self: flex-start;
+    }
+    .form-submit:hover { background: var(--sage-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+    .contact-info { display: flex; flex-direction: column; gap: 2rem; }
+    .contact-item { display: flex; gap: 1.2rem; align-items: flex-start; }
+    .contact-icon-wrap {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: var(--sage-light);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .contact-icon-wrap svg { width: 18px; height: 18px; color: var(--sage-dark); }
+    .contact-item-title {
+      font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--light-text); margin-bottom: 0.3rem;
+    }
+    .contact-item-value { font-size: 0.95rem; color: var(--charcoal); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--charcoal);
+      padding: 4rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 2rem;
+    }
+    .footer-logo {
+      font-family: var(--font-serif);
+      font-size: 1.6rem; font-weight: 300;
+      color: var(--warm-white);
+    }
+    .footer-logo span { color: var(--gold); }
+    .footer-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .footer-links a {
+      font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(250,248,244,0.4);
+      transition: color 0.3s ease;
+    }
+    .footer-links a:hover { color: var(--warm-white); }
+    .footer-social { display: flex; gap: 1rem; }
+    .social-btn {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(250,248,244,0.2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(250,248,244,0.5);
+      transition: all 0.3s ease;
+    }
+    .social-btn:hover { border-color: var(--sage); color: var(--sage); }
+    .footer-copy {
+      width: 100%;
+      font-size: 0.72rem; color: rgba(250,248,244,0.25);
+      text-align: center; letter-spacing: 0.06em;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.5; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.2); }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left {
+      opacity: 0; transform: translateX(-40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right {
+      opacity: 0; transform: translateX(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* ─── MOBILE MENU ─── */
+    .mobile-menu {
+      display: none;
+      position: fixed; inset: 0; z-index: 99;
+      background: var(--warm-white);
+      flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 2.5rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: var(--font-serif);
+      font-size: 2rem; font-weight: 300;
+      color: var(--charcoal);
+      transition: color 0.3s ease;
+    }
+    .mobile-menu a:hover { color: var(--sage); }
+    .mobile-close {
+      position: absolute; top: 1.5rem; right: 2rem;
+      font-size: 1.5rem; cursor: pointer;
+      color: var(--charcoal); background: none; border: none;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      section { padding: 5rem 2.5rem; }
+      nav { padding: 1.2rem 2.5rem; }
+      nav.scrolled { padding: 0.8rem 2.5rem; }
+      #about { grid-template-columns: 1fr; gap: 3rem; }
+      .about-badge { right: 1rem; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      #contact { grid-template-columns: 1fr; gap: 3rem; }
+      #locations { grid-template-columns: 1fr; }
+      .location-card:first-child { border-right: none; border-bottom: 1px solid rgba(250,248,244,0.15); }
+      .testimonials-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .hero-title { font-size: clamp(2.8rem, 10vw, 4rem); }
+      section { padding: 4rem 1.5rem; }
+      nav { padding: 1rem 1.5rem; }
+      nav.scrolled { padding: 0.7rem 1.5rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; align-items: flex-start; padding: 3rem 1.5rem; }
+      #experience { gap: 3rem; padding: 4rem 1.5rem; }
+      .exp-divider { display: none; }
+      .services-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .gallery-item { flex: 0 0 260px; height: 340px; }
+      .gallery-track { padding: 0 1.5rem; }
+      .gallery-header { padding: 0 1.5rem; }
+      .about-badge { width: 110px; height: 110px; bottom: -1.5rem; right: 0.5rem; }
+      .about-badge strong { font-size: 2rem; }
+      .location-card { padding: 4rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CURSOR -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#" class="nav-logo">david rial</a>
+    <ul class="nav-links">
+      <li><a href="#about">Nosotros</a></li>
+      <li><a href="#services">Servicios</a></li>
+      <li><a href="#gallery">Galería</a></li>
+      <li><a href="#locations">Salones</a></li>
+      <li><a href="#contact">Contacto</a></li>
+    </ul>
+    <a href="tel:+34985243372" class="nav-cta">Reservar cita</a>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" id="mobileClose">✕</button>
+    <a href="#about" onclick="closeMobile()">Nosotros</a>
+    <a href="#services" onclick="closeMobile()">Servicios</a>
+    <a href="#gallery" onclick="closeMobile()">Galería</a>
+    <a href="#locations" onclick="closeMobile()">Salones</a>
+    <a href="#contact" onclick="closeMobile()">Contacto</a>
+    <a href="tel:+34985243372" class="btn-primary" onclick="closeMobile()">Reservar cita</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-tag">Oviedo &amp; Avilés, Asturias</p>
+      <h1 class="hero-title">El arte de<br/><em>cuidar tu cabello</em></h1>
+      <p class="hero-subtitle">Más de 20 años transformando miradas.<br/>Profesionales apasionados por la excelencia.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Pedir cita</a>
+        <a href="#services" class="btn-outline">Ver servicios</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Descubrir</span>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-image-wrap reveal-left">
+      <img src="assets/hero-portrait.jpg" alt="Resultado de trabajo en David Rial Peluquerías" loading="lazy" />
+      <div class="about-badge">
+        <strong>+20</strong>
+        <span>años de<br/>experiencia</span>
+      </div>
+    </div>
+    <div class="reveal-right">
+      <p class="section-tag">Nuestra historia</p>
+      <h2 class="section-title">Pasión artesanal<br/>por el <em>cabello</em></h2>
+      <div class="section-line"></div>
+      <p class="section-text">
+        David Rial es un verdadero experto con más de dos décadas de trayectoria en el mundo de la peluquería. Con pasión, precisión y un equipo de profesionales cualificados, en David Rial Peluquerías trabajamos cada corte, cada color y cada tratamiento con la misma dedicación: hacerte brillar.
+      </p>
+      <p class="section-text" style="margin-top:1rem;">
+        Nuestros salones en Oviedo y Avilés son espacios cálidos y acogedores donde la artesanía y el cuidado personal se unen para ofrecerte una experiencia única, a tu medida.
+      </p>
+      <div class="about-stats">
+        <div class="stat-item">
+          <div class="stat-num">+20</div>
+          <div class="stat-label">Años de experiencia</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">98%</div>
+          <div class="stat-label">Clientes satisfechos</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">2</div>
+          <div class="stat-label">Salones en Asturias</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">∞</div>
+          <div class="stat-label">Dedicación al detalle</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="services-header reveal">
+      <div>
+        <p class="section-tag">Lo que hacemos</p>
+        <h2 class="section-title">Nuestros <em>servicios</em></h2>
+      </div>
+      <a href="#contact" class="btn-primary" style="white-space:nowrap;">Reservar ahora</a>
+    </div>
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <img src="assets/services-color.jpg" alt="Coloración y mechas" loading="lazy" />
+        <div class="service-overlay">
+          <div class="service-num">01</div>
+          <div class="service-name">Color &amp;<br/>Mechas</div>
+          <div class="service-desc">Balayage, mechas, tintes y técnicas de color personalizadas para cada tipo de cabello.</div>
+        </div>
+      </div>
+      <div class="service-card">
+        <img src="assets/services-cut.jpg" alt="Corte de cabello" loading="lazy" />
+        <div class="service-overlay">
+          <div class="service-num">02</div>
+          <div class="service-name">Corte &amp;<br/>Peinado</div>
+          <div class="service-desc">Cortes de precisión para mujer, hombre y niños. Recogidos y peinados para eventos especiales.</div>
+        </div>
+      </div>
+      <div class="service-card">
+        <img src="assets/services-treatment.jpg" alt="Tratamientos capilares" loading="lazy" />
+        <div class="service-overlay">
+          <div class="service-num">03</div>
+          <div class="service-name">Tratamientos<br/>Capilares</div>
+          <div class="service-desc">Keratina, hidratación profunda, Angel's HairCare y alisados para un cabello sano y brillante.</div>
+        </div>
+      </div>
+      <div class="service-card">
+        <img src="assets/salon-aviles.jpg" alt="Extensiones de cabello" loading="lazy" />
+        <div class="service-overlay">
+          <div class="service-num">04</div>
+          <div class="service-name">Extensiones</div>
+          <div class="service-desc">Extensiones naturales y sintéticas para añadir longitud, volumen y transformar tu imagen.</div>
+        </div>
+      </div>
+      <div class="service-card">
+        <img src="assets/hero.jpg" alt="Recogidos y eventos" loading="lazy" />
+        <div class="service-overlay">
+          <div class="service-num">05</div>
+          <div class="service-name">Recogidos &amp;<br/>Eventos</div>
+          <div class="service-desc">Recogidos artesanales para bodas, comuniones y cualquier ocasión especial que merezca brillar.</div>
+        </div>
+      </div>
+      <div class="service-card">
+        <img src="assets/salon-silla.jpg" alt="Beauty for you - Uñas y estética" loading="lazy" />
+        <div class="service-overlay">
+          <div class="service-num">06</div>
+          <div class="service-name">Beauty<br/>for You</div>
+          <div class="service-desc">Uñas, maquillaje y estética integral en nuestro espacio Beauty for You en Avilés.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE STRIP -->
+  <div id="experience">
+    <div class="exp-item reveal">
+      <div class="exp-num" data-count="20">0</div>
+      <div class="exp-label">Años de experiencia</div>
+    </div>
+    <div class="exp-divider"></div>
+    <div class="exp-item reveal">
+      <div class="exp-num" data-count="98">0</div>
+      <div class="exp-label">% Clientes satisfechos</div>
+    </div>
+    <div class="exp-divider"></div>
+    <div class="exp-item reveal">
+      <div class="exp-num" data-count="2">0</div>
+      <div class="exp-label">Salones en Asturias</div>
+    </div>
+    <div class="exp-divider"></div>
+    <div class="exp-item reveal">
+      <div class="exp-num" data-count="54">0</div>
+      <div class="exp-label">Reseñas positivas</div>
+    </div>
+  </div>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="gallery-header reveal">
+      <p class="section-tag">Nuestro trabajo</p>
+      <h2 class="section-title">Cada cabello,<br/>una <em>obra de arte</em></h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="gallery-track">
+      <div class="gallery-item">
+        <img src="assets/hero.jpg" alt="Trabajo David Rial" loading="lazy" />
+      </div>
+      <div class="gallery-item">
+        <img src="assets/services-color.jpg" alt="Coloración" loading="lazy" />
+      </div>
+      <div class="gallery-item">
+        <img src="assets/hero-portrait.jpg" alt="Resultado final" loading="lazy" />
+      </div>
+      <div class="gallery-item">
+        <img src="assets/services-cut.jpg" alt="Corte de cabello" loading="lazy" />
+      </div>
+      <div class="gallery-item">
+        <img src="assets/services-treatment.jpg" alt="Tratamiento" loading="lazy" />
+      </div>
+      <div class="gallery-item">
+        <img src="assets/salon-aviles.jpg" alt="Salón Avilés" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="testimonials-header reveal">
+      <p class="section-tag">Lo que dicen</p>
+      <h2 class="section-title">Nuestros <em>clientes</em></h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <div class="testimonial-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">David encantador y el resultado muy muy bueno. Fui por primera vez y repetiré sin duda. Un profesional que sabe exactamente lo que hace.</p>
+        <div class="testimonial-author">— María Esteban Joglar</div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="testimonial-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">Gran profesional que te sabe escuchar y aconsejar lo mejor para tu pelo. Sus cortes son geniales. Llevo 8 años yendo y siempre contenta.</p>
+        <div class="testimonial-author">— Marisa García</div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="testimonial-quote">"</div>
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">El mejor salón de Oviedo sin ninguna duda. Equipo increíble, ambiente acogedor y resultados que superan siempre las expectativas.</p>
+        <div class="testimonial-author">— Cliente de Oviedo</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATIONS -->
+  <section id="locations" style="padding:0;">
+    <div class="location-card">
+      <div class="location-tag">Sede principal</div>
+      <div class="location-name">Oviedo</div>
+      <div class="location-info">
+        <div class="location-row">
+          <svg class="location-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          <div class="location-detail">C/ Pedro Antonio Menéndez, 2 Bajo<br/>33004 Oviedo, Asturias</div>
+        </div>
+        <div class="location-row">
+          <svg class="location-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          <div class="location-detail">985 243 372</div>
+        </div>
+        <div class="location-row">
+          <svg class="location-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <div class="location-detail">davidrialpeluqueria@gmail.com</div>
+        </div>
+      </div>
+      <div class="location-hours">
+        <div class="hours-title">Horario</div>
+        <div class="hours-row"><span>Martes — Viernes</span><span>9:30 — 19:30</span></div>
+        <div class="hours-row"><span>Sábado</span><span>9:00 — 14:00</span></div>
+        <div class="hours-row"><span>Lunes y Domingo</span><span>Cerrado</span></div>
+      </div>
+    </div>
+    <div class="location-card">
+      <div class="location-tag">Segundo salón</div>
+      <div class="location-name">Avilés</div>
+      <div class="location-info">
+        <div class="location-row">
+          <svg class="location-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          <div class="location-detail">Av. Fernández Balsera, 8<br/>33402 Avilés, Asturias</div>
+        </div>
+        <div class="location-row">
+          <svg class="location-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          <div class="location-detail">984 492 082<br/><span style="font-size:0.8rem;opacity:0.6;">Beauty for You: 684 621 019</span></div>
+        </div>
+        <div class="location-row">
+          <svg class="location-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <div class="location-detail">davidrialpeluqueria@gmail.com</div>
+        </div>
+      </div>
+      <div class="location-hours">
+        <div class="hours-title">Horario</div>
+        <div class="hours-row"><span>Lunes — Viernes</span><span>10:00 — 19:00</span></div>
+        <div class="hours-row"><span>Sábado</span><span>9:00 — 14:00</span></div>
+        <div class="hours-row"><span>Domingo</span><span>Cerrado</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="reveal-left">
+      <p class="section-tag">Escríbenos</p>
+      <h2 class="section-title">Reserva tu<br/><em>cita ahora</em></h2>
+      <div class="section-line"></div>
+      <p class="section-text">Cuéntanos qué tienes en mente y te ayudaremos a encontrar el servicio perfecto para ti. También puedes llamarnos directamente.</p>
+      <div class="contact-info" style="margin-top:2.5rem;">
+        <div class="contact-item">
+          <div class="contact-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <div>
+            <div class="contact-item-title">Teléfono</div>
+            <div class="contact-item-value">Oviedo: 985 243 372<br/>Avilés: 984 492 082</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="contact-item-title">Email</div>
+            <div class="contact-item-value">davidrialpeluqueria@gmail.com</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </div>
+          <div>
+            <div class="contact-item-title">Instagram</div>
+            <div class="contact-item-value">@davidrialpeluquerias</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal-right">
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-input" placeholder="Tu nombre" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Teléfono</label>
+            <input type="tel" class="form-input" placeholder="Tu teléfono" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" placeholder="tu@email.com" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Salón</label>
+          <select class="form-select">
+            <option value="">Selecciona un salón</option>
+            <option>Oviedo — C/ Pedro Antonio Menéndez</option>
+            <option>Avilés — Av. Fernández Balsera</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Servicio de interés</label>
+          <select class="form-select">
+            <option value="">¿Qué servicio te interesa?</option>
+            <option>Corte de cabello</option>
+            <option>Color y mechas / Balayage</option>
+            <option>Tratamiento capilar</option>
+            <option>Extensiones</option>
+            <option>Recogido / Evento</option>
+            <option>Beauty for You (uñas/estética)</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mensaje (opcional)</label>
+          <textarea class="form-textarea" placeholder="Cuéntanos qué tienes en mente..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Enviar solicitud</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">david rial <span>peluquerías</span></div>
+    <ul class="footer-links">
+      <li><a href="#about">Nosotros</a></li>
+      <li><a href="#services">Servicios</a></li>
+      <li><a href="#locations">Salones</a></li>
+      <li><a href="#contact">Contacto</a></li>
+    </ul>
+    <div class="footer-social">
+      <a href="https://www.instagram.com/davidrialpeluquerias/" target="_blank" class="social-btn" aria-label="Instagram">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+      <a href="https://www.facebook.com/peluqueriasdavidrial/" target="_blank" class="social-btn" aria-label="Facebook">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+      </a>
+    </div>
+    <p class="footer-copy">© 2026 David Rial Peluquerías — Oviedo &amp; Avilés, Asturias · <a href="http://www.davidrial.com" style="color:inherit;">www.davidrial.com</a></p>
+  </footer>
+
+  <script>
+    // ─── CURSOR ───
+    const dot = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX; mouseY = e.clientY;
+      dot.style.left = mouseX + 'px';
+      dot.style.top = mouseY + 'px';
+    });
+    function animateRing() {
+      ringX += (mouseX - ringX) * 0.12;
+      ringY += (mouseY - ringY) * 0.12;
+      ring.style.left = ringX + 'px';
+      ring.style.top = ringY + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+    document.querySelectorAll('a, button, .service-card').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        ring.style.width = '56px'; ring.style.height = '56px';
+        ring.style.opacity = '0.3';
+      });
+      el.addEventListener('mouseleave', () => {
+        ring.style.width = '36px'; ring.style.height = '36px';
+        ring.style.opacity = '0.6';
+      });
+    });
+
+    // ─── NAV SCROLL ───
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // ─── HERO BG LOAD ───
+    const heroBg = document.getElementById('heroBg');
+    const img = new Image();
+    img.onload = () => heroBg.classList.add('loaded');
+    img.src = 'assets/hero.jpg';
+
+    // ─── MOBILE MENU ───
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileClose = document.getElementById('mobileClose');
+    hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+    mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    function closeMobile() { mobileMenu.classList.remove('open'); }
+
+    // ─── SCROLL REVEAL ───
+    const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => observer.observe(el));
+
+    // ─── COUNT UP ───
+    const counters = document.querySelectorAll('[data-count]');
+    const countObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = parseInt(el.dataset.count);
+          const duration = 1800;
+          const start = performance.now();
+          function update(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.round(eased * target) + (target === 98 ? '%' : target === 20 ? '+' : '');
+            if (progress < 1) requestAnimationFrame(update);
+          }
+          requestAnimationFrame(update);
+          countObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(el => countObserver.observe(el));
+
+    // ─── FORM SUBMIT ───
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.form-submit');
+      btn.textContent = '¡Solicitud enviada!';
+      btn.style.background = 'var(--sage-dark)';
+      setTimeout(() => {
+        btn.textContent = 'Enviar solicitud';
+        btn.style.background = '';
+        e.target.reset();
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
