@@ -136,22 +136,19 @@
       overflow: hidden;
     }
 
-    /* ── PARALLAX ZOOM HERO ── */
+    /* ── PARALLAX HERO ── */
     .hero-zoom-wrap {
       position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
       overflow: hidden;
     }
     .hero-zoom-img {
-      width: 100%; height: 100%;
+      width: 100%; height: 115%;
       object-fit: cover; object-position: center 20%;
-      transform: scale(0.55);
-      border-radius: 12px;
-      transition: none;
-      will-change: transform, border-radius;
+      transform: translateY(0px);
+      will-change: transform;
     }
     .hero-zoom-img.loaded {
-      /* JS controlará el scale vía scroll */
+      /* JS controlará el translateY vía scroll */
     }
     .hero-bg {
       position: absolute; inset: 0;
@@ -1085,7 +1082,7 @@
       navbar.classList.toggle('scrolled', window.scrollY > 60);
     });
 
-    // ─── HERO PARALLAX ZOOM ───
+    // ─── HERO PARALLAX ───
     const heroZoomImg = document.getElementById('heroZoomImg');
     const heroOverlay = document.getElementById('heroOverlay');
     const heroSection = document.getElementById('hero');
@@ -1096,17 +1093,10 @@
     if (heroZoomImg.complete) heroZoomImg.classList.add('loaded');
 
     function updateHeroZoom() {
-      const heroH = heroSection.offsetHeight;
       const scrollY = window.scrollY;
-      // scrollY va de 0 a heroH
-      // scale va de 0.55 (inicio) a 1.0 (al llegar al final del hero)
-      const progress = Math.min(scrollY / heroH, 1);
-      const scale = 0.55 + progress * 0.45;
-      const radius = Math.max(0, 12 - progress * 12);
-      heroZoomImg.style.transform = `scale(${scale})`;
-      heroZoomImg.style.borderRadius = `${radius}px`;
-      // La overlay aparece progresivamente para que el texto sea legible
-      heroOverlay.style.opacity = Math.min(progress * 1.6, 0.72);
+      // Parallax suave: la imagen sube a la mitad de velocidad del scroll
+      const translateY = scrollY * 0.35;
+      heroZoomImg.style.transform = `translateY(${translateY}px)`;
     }
 
     window.addEventListener('scroll', updateHeroZoom, { passive: true });
